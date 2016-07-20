@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#keyboard{
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				font-size: 20px;
+				color: #000;
+				font-weight: bold;
+			}
+			#keyboard .number{
+				display: -webkit-box;
+				-webkit-box-align: center;
+				-webkit-box-pack: center;
+			}
+			#keyboard .number div{
+				width: 33.33%;
+				cursor: pointer;
+				-webkit-box-flex: 1;
+				padding: 10px 0;
+				text-align: center;
+				border-right: 1px solid #ddd;
+				border-top: 1px solid #ddd;
+			}
+			#keyboard .number div:last-child{
+				border-right: 0;
+			}
+			#keyboard .number:last-child div{
+				border-bottom: 0;
+			}
+			#password{
+				width: 80%;
+				display: -webkit-box;
+				-webkit-box-align: center;
+				-webkit-box-pack: center;
+				margin: 0 auto;
+				border: 1px solid #666;
+				border-radius: 5px;
+			}
+			#password div{
+				-webkit-box-flex: 1;
+				text-align: center;
+				padding: 10px 0;
+				height: 25px;
+				line-height: 25px;
+				border-right: 1px solid #666;
+			}
+			#password div:last-child{
+				border-right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="password">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+		<div id="keyboard">
+			<div class="number">
+				<div>1</div><div>2</div><div>3</div>
+			</div>
+			<div class="number">
+				<div>4</div><div>5</div><div>6</div>
+			</div>
+			<div class="number">
+				<div>7</div><div>8</div><div>9</div>
+			</div>
+			<div class="number">
+				<div>&nbsp;</div><div>0</div><div class="clear">清除</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery.min.js" ></script>
+	<script type="text/javascript">
+		$(function(){
+			var arr=[];
+			var json={
+				click:function(){
+					if(arr.length==6){
+						alert("密码的长度最多为6位");
+						return;
+					}
+					arr.push($(this).html());
+					var password=$("#password").children();
+					$.each(arr, function(i) {
+						$(password[i]).html("*");
+					});
+					console.log(arr.join(""));
+				},
+				clear:function(){
+					var password=$("#password").children();
+					var length=0;
+					$.each(password, function(i) {
+						if($(password[i]).html()!=""){
+							length++;
+						}
+					});
+					if(!length){
+						alert("您还没有输入信息!")
+						return;
+					}
+					$(password[length-1]).html("");
+					arr.length=length-1;
+					console.log(arr);
+				}
+			};
+			$("#keyboard .clear").click(json.clear);
+			$("#keyboard .number div").not(".clear").click(json.click);
+		});
+	</script>
+</html>

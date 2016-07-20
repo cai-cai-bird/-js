@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+	</head>
+	<body>
+		
+	</body>
+	<script>
+		var add=function (a,b){
+			if(typeof a !=="number" || typeof b !=="number"){
+				throw {
+					name:"TypeError",
+					message:"add needs numbers"
+				}
+			}
+			return a+b;
+		}
+		var try_it=function(a,b){
+			try{
+				document.writeln(a+"+"+b+"="+add(a,b));
+			}catch(e){
+				document.writeln("错误类型："+e.name+"错误信息："+e.message)
+			}
+		}
+		try_it("10",5);
+	</script>
+</html>
