@@ -1,0 +1,90 @@
+````
+[]+[] //"" 先调用valueOf 返回为自身，不是原始值　在调用toString()　返回为"" ,因此结果为空
+[]+{} //"[object Object]" 先调用valueOf 返回为自身，不是原始值 ,所以使用toString()方法,返回为空，因此{}也需要调用toString方法,因此返回"[object Object]"
+{}+[] //０　因为javascript将{}解析为代码块 因此执行+[]　因为[]只有toString返回为空　＋为一元运算符　因此Number("")　返回为０
+{}+{} //chrome 一会返回NaN 一会返回"[object Object][object Object]" 
+undefined+undefined //NaN
+null + null //0
+````
+1.2 通过ToNumber()将值转换为数字
+
+下面的表格解释了ToNumber()是如何将原始值转换成数字的 (§9.3).
+
+参数	       结果
+undefined	  NaN
+null	      +0
+布尔值	      true被转换为1,false转换为+0
+数字	      无需转换
+字符串	      由字符串解析为数字.例如,"324"被转换为324
+
+1.3 通过ToString()将值转换为字符串
+
+下面的表格解释了ToString()是如何将原始值转换成字符串的(§9.8).
+
+参数	         结果
+undefined	    "undefined"
+null	        "null"
+布尔值	        "true"  或者 "false"
+数字	        数字作为字符串,比如. "1.765"
+字符串	        无需转换
+
+
+11.9.3 抽象相等比较算法
+比较运算 x==y, 其中 x 和 y 是值，产生 true 或者 false。这样的比较按如下方式进行：
+
+若 Type(x) 与 Type(y) 相同， 则
+
+若 Type(x) 为 Undefined， 返回 true。
+若 Type(x) 为 Null， 返回 true。
+若 Type(x) 为 Number， 则
+
+若 x 为 NaN， 返回 false。
+若 y 为 NaN， 返回 false。
+若 x 与 y 为相等数值， 返回 true。
+若 x 为 +0 且 y 为 −0， 返回 true。
+若 x 为 −0 且 y 为 +0， 返回 true。
+返回 false。
+若 Type(x) 为 String, 则当 x 和 y 为完全相同的字符序列（长度相等且相同字符在相同位置）时返回 true。 否则， 返回 false。
+若 Type(x) 为 Boolean, 当 x 和 y 为同为 true 或者同为 false 时返回 true。 否则， 返回 false。
+当 x 和 y 为引用同一对象时返回 true。否则，返回 false。
+若 x 为 null 且 y 为 undefined， 返回 true。
+若 x 为 undefined 且 y 为 null， 返回 true。
+若 Type(x) 为 Number 且 Type(y) 为 String，返回比较 x == ToNumber(y) 的结果。
+若 Type(x) 为 String 且 Type(y) 为 Number，返回比较 ToNumber(x) == y 的结果。
+若 Type(x) 为 Boolean， 返回比较 ToNumber(x) == y 的结果。
+若 Type(y) 为 Boolean， 返回比较 x == ToNumber(y) 的结果。
+若 Type(x) 为 String 或 Number，且 Type(y) 为 Object，返回比较 x == ToPrimitive(y) 的结果。
+若 Type(x) 为 Object 且 Type(y) 为 String 或 Number， 返回比较 ToPrimitive(x) == y 的结果。
+返回 false。
+注：按以上相等之定义：
+
+字符串比较可以按这种方式强制执行: "" + a == "" + b。
+数值比较可以按这种方式强制执行: +a == +b。
+布尔值比较可以按这种方式强制执行: !a == !b。
+注：等值比较操作保证以下不变：
+
+A != B 等价于 !(A==B)。
+A == B 等价于 B == A，除了 A 与 B 的执行顺序。
+注：相等运算符不总是传递的。 例如，两个不同的 String 对象，都表示相同的字符串值；== 运算符认为每个 String 对象都与字符串值相等，但是两个字符串对象互不相等。例如：
+
+new String("a") == "a" 和 "a" == new String("a") 皆为 true。
+new String("a") == new String("a") 为 false。
+字符串比较使用的方式是简单地检测字符编码单元序列是否相同。不会做更复杂的、基于语义的字符或者字符串相等的定义以及 Unicode 规范中定义的 collating order。所以 Unicode 标准中认为相等的 String 值可能被检测为不等。实际上这一算法认为两个字符串已经是经过规范化的形式。
+
+11.9.6 严格等于比较算法
+比较 x===y，x 和 y 为值，需要产出 true 或 false。比较过程如下：
+
+如果 Type(x) 与 Type(y) 的结果不一致，返回 false，否则
+如果 Type(x) 结果为 Undefined，返回 true
+如果 Type(x) 结果为 Null，返回 true
+如果 Type(x) 结果为 Number，则
+
+如果 x 为 NaN，返回 false
+如果 y 为 NaN，返回 false
+如果 x 与 y 为同一个数字，返回 true
+如果 x 为 +0，y 为 -0，返回 true
+如果 x 为 -0，y 为 +0，返回 true
+返回 false
+如果 Type(x) 结果为 String，如果 x 与 y 为完全相同的字符序列（相同的长度和相同的字符对应相同的位置），返回 true，否则，返回 false
+如果 Type(x) 结果为 Boolean，如果 x 与 y 都为 true 或 false，则返回 true，否则，返回 false
+如果 x 和 y 引用到同一个 Object 对象，返回 true，否则，返回 false
