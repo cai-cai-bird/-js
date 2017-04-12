@@ -32,6 +32,10 @@ crate table tablename(
 ```
 drop table tablename;
 ```
+## MySQL 清空数据表
+```
+truncate 数据库名;
+```
 ## MySQL 插入数据
 ```
 insert into tablename (field1, field2,...fieldN ) VALUES ( value1, value2,...valueN );
