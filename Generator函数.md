@@ -105,3 +105,21 @@ g.next()        // { value: 1, done: false }
 g.return('foo') // { value: "foo", done: true }
 g.next()        // { value: undefined, done: true }
 ```
+
+## 协程
+
+###  解释
+
+多个线程互相协作，完成异步任务
+
+### 运行流程
+
+1)第一步，协程A开始执行。
+
+2)第二步，协程A执行到一半，进入暂停，执行权转移到协程B。
+
+3)第三步，（一段时间后）协程B交还执行权。
+
+4)第四步，协程A恢复执行
+
+
